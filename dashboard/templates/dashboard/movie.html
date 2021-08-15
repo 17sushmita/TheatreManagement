@@ -2,6 +2,14 @@
 {% block content %}
 
 <div class="container">
+    {% if messages %}
+    {% for message in messages %}
+        <div class="{{message.tags}}">
+            {{message}}
+        </div>
+    {% endfor %}
+    {% endif %}
+
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">{{movie.name}}</h5>

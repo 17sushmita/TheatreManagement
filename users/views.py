@@ -5,13 +5,11 @@ from .models import User
 # Create your views here.
 def signup(request):
     if request.method == 'POST':
-        print(request.POST)
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = User.objects.get(email=request.POST['email'])
-                print(user)
                 messages.error(request, 'That email is already taken')
-                return render(request, 'signup.html', {'error':'Username has already been taken'})
+                return render(request, 'users/signup.html', {'error':'Username has already been taken'})
             except User.DoesNotExist:
                 user = User.objects.create_user(request.POST['email'], password=request.POST['password1'])
                 login(request, user)
