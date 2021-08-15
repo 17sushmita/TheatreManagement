@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    {% if messages %}
+    {% for message in messages %}
+        <div class="{{message.tags}}">
+            {{message}}
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{movie.name}}</h5>
+            <p class="card-text">{{movie.description}}</p>
+
+
+            {% if request.user.is_staff %}
+    
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Add Time Slot
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add Time Slot</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST">
+                                    <input hidden name="type" value="slot">
+                                    {% csrf_token %}
+                            
+                                    <div class="form-group">
+                                        <label for="date">Date</label>
+                                        <input type="date" class="form-control" id="date" name="date">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="start_time">Start Time</label>
+                                        <input type="time" class="form-control" id="start_time" name="start_time">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="end_time">End Time</label>
+                                        <input type="time" class="form-control" id="end_time" name="end_time">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buytickets">
+    Buy Tickets
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="buytickets" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST">
+                {% csrf_token %}
+                <input hidden name="type" value="ticket">
+                <div class="form-group">
+                    <select name="slot" id="slot">
+                        {% for slot in slots %}
+                            <option selected>Select Time Slot</option>
+                            <option value="{{ slot.id }}">{{ slot.date }} {{ slot.start_time }} - {{ slot.end_time }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="number_of_tickets">No. of Tickets</label>
+                    <input type="number" class="form-control" id="number_of_tickets" name="number_of_tickets">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

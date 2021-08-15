@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    {% for movie in movies %}
+    <div class="row">
+        <div class="col-sm">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{movie.name}}</h5>
+                  <p class="card-text">{{movie.description}}</p>
+                  <a href="{% url 'movie_page' movie.id  %}" class="btn btn-primary">View Movie</a>
+                </div>
+        </div>
+    </div>
+      {% endfor %}
+  </div>
+
+{% endblock %}
