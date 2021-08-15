@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Your Orders</h1>
+
+    {% for ticket in tickets %}
+    Movie Name : {{ticket.slot.movie.name}} |
+    Slot : {{ticket.slot}} |
+    Quantity : {{ticket.quantity}}
+    <br><br>
+    {% endfor %}
+
+{% endblock %}
